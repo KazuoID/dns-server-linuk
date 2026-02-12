@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panduan Instalasi DNS & Mail Server - Pemula</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        nav {
+            background: #34495e;
+            padding: 15px 30px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 25px;
+            transition: background 0.3s;
+        }
+
+        nav ul li a:hover {
+            background: #3498db;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            border-left: 5px solid #3498db;
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section h2 i {
+            font-size: 1.2em;
+        }
+
+        .step-box {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+        }
+
+        .step-title {
+            color: #2c3e50;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .step-title .number {
+            background: #3498db;
+            color: white;
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 16px;
+        }
+
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 15px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .code-inline {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+        }
+
+        .note {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .warning {
+            background: #f8d7da;
+            border-left: 5px solid #dc3545;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .success {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        th {
+            background: #3498db;
+            color: white;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .command {
+            background: #e7f5ff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            border-left: 3px solid #3498db;
+            margin: 10px 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .emoji-icon {
+            font-size: 1.3em;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+            
+            nav ul {
+                flex-direction: column;
+            }
+            
+            .content {
+                padding: 20px 15px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📡 Panduan Lengkap Instalasi DNS & Mail Server</h1>
+            <p>Untuk Pemula - Step by Step dengan Penjelasan Detail</p>
+            <p style="margin-top: 15px; font-size: 1em;">🖥️ Debian/Ubuntu Server</p>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="#dns">🔧 DNS Server</a></li>
+                <li><a href="#mail">📧 Mail Server</a></li>
+                <li><a href="#roundcube">🌐 Roundcube Webmail</a></li>
+                <li><a href="#verifikasi">✅ Verifikasi</a></li>
+            </ul>
+        </nav>
+
+        <div class="content">
+            <!-- DNS SERVER SECTION -->
+            <div id="dns" class="section">
+                <h2>
+                    <span class="emoji-icon">🔧</span> 
+                    PART 1: INSTALASI DNS SERVER
+                </h2>
+                
+                <div class="step-box">
+                    <div class="step-title">
+                        <span class="number">1</span>
+                        Instalasi Paket DNS
+                    </div>
+                    <div class="command">
+                        # Install BIND9 dan DNS Utilities<br>
+                        apt install bind9 dnsutils -y
+                    </div>
+                    <p><strong>Penjelasan:</strong> BIND9 adalah software DNS server yang paling populer. dnsutils berisi tools untuk testing DNS.</p>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-title">
+                        <span class="number">2</span>
+                        Konfigurasi Forwarders
+                    </div>
+                    <div class="command">
+                        cd /etc/bind<br>
+                        ls  # Lihat isi direktori<br>
+                        nano named.conf.options
+                    </div>
+                    <p>Tambahkan konfigurasi berikut di dalamnya:</p>
+                    <pre>
+forwarders {
+    192.168.1.1;  # IP DNS forwarder (bisa diganti dengan 8.8.8.8)
+};</pre>
+                    <div class="note">
+                        <strong>💡 Informasi:</strong> Forwarders digunakan untuk meneruskan request DNS yang tidak dikenal ke DNS server lain.
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-title">
+                        <span class="number">3</span>
+                        Membuat Zone File Forward (db.tkj.com)
+                    </div>
+                    <div class="command">
+                        cp db.local db.tkj.com<br>
+                        nano db.tkj.com
+                    </div>
+                    <p>Isi file db.tkj.com:</p>
+                    <pre>
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     tkj.com. root.tkj.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      tkj.com.
+@       IN      A       192.168.1.1
+ns      IN      A       192.168.1.1
+www     IN      A       192.168.1.1
+mail    IN      A       192.168.1.1</pre>
+                    <table>
+                        <tr>
+                            <th>Record</th>
+                            <th>Fungsi</th>
+                        </tr>
+                        <tr>
+                            <td>SOA</td>
+                            <td>Start of Authority - otoritas domain</td>
+                        </tr>
+                        <tr>
+                            <td>NS</td>
+                            <td>Name Server - server DNS</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>Address record - mengubah domain ke IP</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-title">
+                        <span class="number">4</span>
+                        Membuat Zone File Reverse (db.192)
+                    </div>
+                    <div class="command">
+                        cp db.127 db.192<br>
+                        nano db.192
+                    </div>
+                    <pre>
+; BIND reverse data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     tkj.com. root.tkj.com. (
+                              1         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      tkj.com.
+1       IN      PTR     www.tkj.com.
+1       IN      PTR     mail.tkj.com.</pre>
+                    <div class="note">
+                        <strong>💡 Penjelasan:</strong> Reverse DNS digunakan untuk menerjemahkan IP ke domain (kebalikan dari record A).
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-title">
+                        <span class="number">5</span>
+                        Konfigurasi named.conf.local
+                    </div>
+                    <div class="command">
+                        nano /etc/bind/named.conf.local
+                    </div>
+                    <pre>
+zone "tkj.com"{
+        type master;
+        file "/etc/bind/db.tkj.com";
+};
+
+#zone "1.168.192.in-addr.arpa"{
+#        type master;
+#        file "/etc/bind/db.192";
+#};</pre>
+                    <div class="warning">
+                        <strong>⚠️ Perhatian:</strong> Zone reverse di-comment (#). Jika ingin mengaktifkan, hapus tanda pagar (#).
+                    </div>
+                    <p class="command">ctrl+x - y - enter # Untuk menyimpan</p>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-title">
+                        <span class="number">6</span>
+                        Konfigurasi Resolver (/etc/resolv.conf)
+                    </div>
+                    <div class="command">
+                        nano /etc/resolv.conf
+                    </div>
+                    <pre>
+search tkj.com
+nameserver 192.168.1.1</pre>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-title">
+                        <span class="number">7</span>
+                        Restart dan Cek Status BIND9
+                    </div>
+                    <div class="command">
+                        systemctl restart bind9<br>
+                        systemctl status bind9
+                    </div>
+                    <div class="success">
+                        <strong>✅ Sukses!</strong> Jika muncul "active (running)" maka DNS server sudah berjalan.
+                    </div>
+                </div>
+            </div>
+
+            <!-- MAIL SERVER SECTION -->
+            <div id="mail" class="section">
+                <h2>
+                    <span class="emoji-icon">📧</span> 
+                    PART 2: INSTALASI MAIL SERVER (Postfix + Dovecot)
+                </h2>
+                
+                <div class="step-box">
+                    <div class="step-title">
+                        <span class="number">1</span>
+                        Update Sistem & Install Paket
+                    </div>
+                    <div class="command">
+                        apt update<br>
+                        apt install postfix dovecot-imapd dovecot-pop3d -y
+                    </div>
+                    <p>Pada saat instalasi Postfix, pilih:</p>
+                    <ul style="margin-left: 30px; margin-top: 10px;">
+                        <li><strong>Internet Site</strong> - sebagai tipe konfigurasi</li>
+                        <li><strong>mail.tkj.com</strong> - sebagai system mail name</li>
+                    </ul>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-title">
+                        <span class="number">2</span>
+                        Konfigurasi Postfix (main.cf)
+                    </div>
+                    <div class="command">
+                        nano /etc/postfix/main.cf
+                    </div>
+                    <p>Cari dan edit/modifikasi baris berikut:</p>
+                    <pre>
+inet_interfaces = all
+inet_protocols = all
+
+# Tambahkan baris berikut di paling bawah
+home_mailbox = Maildir/</pre>
+                    <div class="note">
+                        <strong>📁 Maildir:</strong> Format penyimpanan email dengan struktur direktori. Setiap email disimpan sebagai file terpisah.
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-title">
+                        <span class="number">3</span>
+                        Membuat Direktori Maildir untuk Template User
+                    </div>
+                    <div class="command">
+                        maildirmake.dovecot /etc/skel/Maildir
+                    </div>
+                    <p>Perintah ini akan membuat folder Maildi r di direktori skel, sehingga setiap user baru otomatis memiliki folder Maildir.</p>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-title">
+                        <span class="number">4</span>
+                        Rekonfigurasi Postfix
+                    </div>
+                    <div class="command">
+                        dpkg-reconfigure postfix
+                    </div>
+                    <p>Ikuti pilihan berikut:</p>
+                    <table>
+                        <tr><th>Prompt</th><th>Jawaban</th></tr>
+                        <tr><td>General type</td><td>Internet Site</td></tr>
+                        <tr><td>System mail name</td><td>mail.tkj.com</td></tr>
+                        <tr><td>Root/postmaster recipient</td><td>(kosongkan)</td></tr>
+                        <tr><td>Other destinations</td><td>mail.tkj.com</td></tr>
+                        <tr><td>Force synchronous updates</td><td>Yes</td></tr>
+                        <tr><td>Local networks</td><td>(ok/default)</td></tr>
+                        <tr><td>Mailbox size limit</td><td>0 (tanpa batas)</td></tr>
+                        <tr><td>Local address extension</td><td>(kosongkan)</td></tr>
+                        <tr><td>Internet protocols</td><td>ipv4</td></tr>
+                    </table>
+                    <div class="command">
+                        systemctl restart postfix
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-title">
+                        <span class="number">5</span>
+                        Konfigurasi Dovecot
+                    </div>
+                    <p><strong>File 1: /etc/dovecot/dovecot.conf</strong></p>
+                    <div class="command">
+                        nano /etc/dovecot/dovecot.conf
+                    </div>
+                    <p>Cari baris <span class="code-inline">#listen = *</span> dan hapus tanda pagar (#):</p>
+                    <pre>
+listen = *  # Dovecot akan listen di semua interface</pre>
+                    
+                    <p><strong>File 2: /etc/dovecot/conf.d/10-auth.conf</strong></p>
+                    <div class="command">
+                        nano /etc/dovecot/conf.d/10-auth.conf
+                    </div>
+                    <pre>
+disable_plaintext_auth = no  # Izinkan autentikasi tanpa SSL</pre>
+                    
+                    <p><strong>File 3: /etc/dovecot/conf.d/10-mail.conf</strong></p>
+                    <div class="command">
+                        nano /etc/dovecot/conf.d/10-mail.conf
+                    </div>
+                    <pre>
+mail_location = maildir:~/Maildir  # Lokasi penyimpanan email
+# Beri tanda pagar pada baris mbox: 
+# mail_location = mbox:~/mail:INBOX=/var/mail/%u</pre>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-title">
+                        <span class="number">6</span>
+                        Restart Dovecot dan Buat User
+                    </div>
+                    <div class="command">
+                        systemctl restart dovecot<br>
+                        adduser satu<br>
+                        # Masukkan password: satu<br>
+                        adduser dua<br>
+                        # Masukkan password: dua<br>
+                        systemctl restart postfix dovecot
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROUNDCUBE SECTION -->
+            <div id="roundcube" class="section">
+                <h2>
+                    <span class="emoji-icon">🌐</span> 
+                    PART 3: INSTALASI ROUNDCUBE WEBMAIL
+                </h2>
+                
+                <div class="step-box">
+                    <div class="step-title">
+                        <span class="number">1</span>
+                        Install MariaDB dan Roundcube
+                    </div>
+                    <div class="command">
+                        apt install mariadb-server roundcube -y
+                    </div>
+                    <p>Saat instalasi Roundcube:</p>
+                    <ul style="margin-left: 30px;">
+                        <li>Pilih <strong>Yes</strong> untuk konfigurasi database</li>
+                        <li>Masukkan password database: <strong>123</strong> (atau password pilihan)</li>
+                    </ul>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-title">
+                        <span class="number">2</span>
+                        Konfigurasi Roundcube (config.inc.php)
+                    </div>
+                    <div class="command">
+                        nano /etc/roundcube/config.inc.php
+                    </div>
+                    <p>Edit atau pastikan baris berikut sesuai:</p>
+                    <pre>
+// Konfigurasi IMAP
+$config['default_host'] = 'mail.tkj.com';
+
+// Konfigurasi SMTP
+$config['smtp_server'] = 'mail.tkj.com';
+$config['smtp_port'] = '25';
+$config['smtp_user'] = '';
+$config['smtp_pass'] = '';
+$config['smtp_host'] = "localhost:25";</pre>
+                    <div class="command">
+                        # Simpan: ctrl+x, tekan Y, lalu Enter
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-title">
+                        <span class="number">3</span>
+                        Rekonfigurasi Roundcube
+                    </div>
+                    <div class="command">
+                        dpkg-reconfigure roundcube-core
+                    </div>
+                    <table>
+                        <tr><th>Prompt</th><th>Jawaban</th></tr>
+                        <tr><td>IMAP server(s)</td><td>(kosongkan)</td></tr>
+                        <tr><td>Default language</td><td>eng_us</td></tr>
+                        <tr><td>Reinstall database</td><td>No</td></tr>
+                        <tr><td>Web server</td><td>[*] apache2 (pilih dengan spasi)</td></tr>
+                        <tr><td>Restart web server</td><td>Yes</td></tr>
+                    </table>
+                    <p>Untuk file config.inc.php yang dimodifikasi, pilih: <strong>keep the local version currently installed</strong></p>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-title">
+                        <span class="number">4</span>
+                        Konfigurasi Apache
+                    </div>
+                    <div class="command">
+                        nano /etc/apache2/apache2.conf
+                    </div>
+                    <p>Tambahkan baris ini di akhir file:</p>
+                    <pre>
+Include /etc/roundcube/apache.conf</pre>
+                    
+                    <div class="command">
+                        cd /etc/apache2/sites-available/<br>
+                        touch mail.conf<br>
+                        nano mail.conf
+                    </div>
+                    <pre>
+&lt;VirtualHost *:80&gt;
+    ServerName mail.contoh.local
+    DocumentRoot /usr/share/roundcube
+&lt;/VirtualHost&gt;</pre>
+                    
+                    <div class="command">
+                        a2ensite mail.conf<br>
+                        systemctl restart apache2
+                    </div>
+                    <div class="success">
+                        <strong>✅ Selesai!</strong> Webmail dapat diakses melalui browser: http://IP_Server/
+                    </div>
+                </div>
+            </div>
+
+            <!-- VERIFIKASI SECTION -->
+            <div id="verifikasi" class="section">
+                <h2>
+                    <span class="emoji-icon">✅</span> 
+                    PART 4: VERIFIKASI DAN TESTING
+                </h2>
+                
+                <div class="step-box">
+                    <div class="step-title">
+                        <span class="number">1</span>
+                        Verifikasi DNS
+                    </div>
+                    <div class="command">
+                        nslookup www.tkj.com<br>
+                        nslookup mail.tkj.com<br>
+                        dig tkj.com
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-title">
+                        <span class="number">2</span>
+                        Verifikasi Mail Server
+                    </div>
+                    <div class="command">
+                        telnet localhost 25  # Cek SMTP<br>
+                        telnet localhost 110 # Cek POP3<br>
+                        telnet localhost 143 # Cek IMAP
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-title">
+                        <span class="number">3</span>
+                        Testing Kirim Email
+                    </div>
+                    <div class="command">
+                        # Kirim email dari command line<br>
+                        echo "Test email" | mail -s "Testing" satu@localhost
+                    </div>
+                    <p>Login ke Roundcube menggunakan user: <strong>satu</strong> password: <strong>satu</strong></p>
+                </div>
+            </div>
+
+            <!-- RINGKASAN -->
+            <div class="section">
+                <h2>
+                    <span class="emoji-icon">📝</span> 
+                    RINGKASAN INFORMASI
+                </h2>
+                
+                <table>
+                    <tr>
+                        <th>Service</th>
+                        <th>Port</th>
+                        <th>Konfigurasi</th>
+                    </tr>
+                    <tr>
+                        <td>DNS (BIND9)</td>
+                        <td>53</td>
+                        <td>/etc/bind/</td>
+                    </tr>
+                    <tr>
+                        <td>SMTP (Postfix)</td>
+                        <td>25</td>
+                        <td>/etc/postfix/main.cf</td>
+                    </tr>
+                    <tr>
+                        <td>POP3 (Dovecot)</td>
+                        <td>110</td>
+                        <td>/etc/dovecot/conf.d/</td>
+                    </tr>
+                    <tr>
+                        <td>IMAP (Dovecot)</td>
+                        <td>143</td>
+                        <td>/etc/dovecot/conf.d/</td>
+                    </tr>
+                    <tr>
+                        <td>Webmail</td>
+                        <td>80</td>
+                        <td>/etc/roundcube/</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- TIPS & TRICKS -->
+            <div class="section">
+                <h2>
+                    <span class="emoji-icon">💡</span> 
+                    TIPS UNTUK PEMULA
+                </h2>
+                
+                <div class="success">
+                    <strong>✅ Tips 1:</strong> Selalu cek status service setelah restart: systemctl status [service]
+                </div>
+                
+                <div class="note">
+                    <strong>📘 Tips 2:</strong> Gunakan command 'tail -f /var/log/syslog' untuk melihat log secara realtime
+                </div>
+                
+                <div class="warning">
+                    <strong>⚠️ Tips 3:</strong> Pastikan firewall mengizinkan port yang digunakan:
+                    <div class="command" style="margin-top: 10px;">
+                        ufw allow 22/tcp<br>
+                        ufw allow 53/tcp<br>
+                        ufw allow 80/tcp<br>
+                        ufw allow 25/tcp<br>
+                        ufw allow 110/tcp<br>
+                        ufw allow 143/tcp
+                    </div>
+                </div>
+                
+                <div class="success">
+                    <strong>✅ Tips 4:</strong> Backup file konfigurasi sebelum mengedit:
+                    <div class="command" style="margin-top: 10px;">
+                        cp /etc/bind/named.conf.options /etc/bind/named.conf.options.backup
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>📧 Panduan Instalasi DNS & Mail Server</p>
+            <p>Dibuat untuk memudahkan user baru dalam memahami konfigurasi server</p>
+            <p style="margin-top: 20px; opacity: 0.8;">🐧 Debian/Ubuntu Server • BIND9 • Postfix • Dovecot • Roundcube</p>
+            <p style="margin-top: 20px; font-size: 0.9em;">© 2024 - Seluruh panduan dapat digunakan untuk pembelajaran</p>
+        </footer>
+    </div>
+</body>
+</html>
